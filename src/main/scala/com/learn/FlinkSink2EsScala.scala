@@ -9,7 +9,7 @@ object FlinkSink2EsScala {
   def main(args: Array[String]): Unit = {
 
     val httpHosts: java.util.ArrayList[HttpHost] = new java.util.ArrayList()
-    httpHosts.add(new HttpHost("10.31.53.185", 9200, "http"))
+    httpHosts.add(new HttpHost("id1", 9200, "http"))
     val esUperstSink: ElasticsearchSink.Builder[String] = ESSinkUtils.getUpsertJsonStrESSinkWithDefaultParameters(httpHosts)
 
     val env = StreamExecutionEnvironment.getExecutionEnvironment
