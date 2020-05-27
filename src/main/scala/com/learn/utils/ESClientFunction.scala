@@ -114,8 +114,8 @@ object ESClientFunction extends Serializable {
   }
 
   def createUpsertRequest(index: String, esType: String, id: String, jsonStr: String): UpdateRequest = {
-    createUpdateRequest(index, esType, id, jsonStr)
-      .upsert(jsonStr, XContentType.JSON)
+    createUpdateRequest(index, esType, id, jsonStr).
+    upsert(jsonStr, XContentType.JSON)
   }
 
 }

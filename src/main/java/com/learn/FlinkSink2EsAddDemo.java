@@ -11,6 +11,7 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.connectors.elasticsearch.ElasticsearchSinkFunction;
 import org.apache.flink.streaming.connectors.elasticsearch.RequestIndexer;
 import org.apache.http.HttpHost;
+import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.Requests;
 
 
@@ -18,7 +19,7 @@ import java.util.List;
 import static com.learn.constant.PropertiesConstants.*;
 
 @Slf4j
-public class FlinkSink2EsDemo {
+public class FlinkSink2EsAddDemo {
     public static void main(String[] args) throws Exception {
 
         final ParameterTool parameterTool = ExecutionEnvUtil.createParameterTool(args);
@@ -33,11 +34,13 @@ public class FlinkSink2EsDemo {
         int sinkParallelism = parameterTool.getInt(STREAM_SINK_PARALLELISM, 5);
 
         ESSinkUtil.addSink(esAddresses, bulkSize, sinkParallelism, data, new ElasticsearchSinkFunction<String>() {
+
             @Override
             public void process(String element, RuntimeContext ctx, RequestIndexer indexer) {
                 indexer.add(Requests.indexRequest()
                         .index("zjf_2020-05-26")
                         .type("ooo")
+//                        .source
                         .source(JSON.parseObject(element)));
             }
         }, parameterTool);

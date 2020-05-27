@@ -14,7 +14,7 @@ object ESClientFunctionFactory extends Serializable {
     new ElasticsearchSinkFunction[String]() {
       override def process(element: String, ctx: RuntimeContext, indexer: RequestIndexer): Unit = {
         val jsonMap: util.HashMap[String, Object] = JSON.parseObject(element, classOf[java.util.HashMap[String, Object]])
-        val esConfigMap = JSON.parseObject(jsonMap.get(ESConfigType.ESCONFIG).toString,classOf[java.util.HashMap[String,Object]])
+        val esConfigMap: util.HashMap[String, Object] = JSON.parseObject(jsonMap.get(ESConfigType.ESCONFIG).toString,classOf[java.util.HashMap[String,Object]])
         val ESIndexConfig(index, esType, id) = ESParseUtil.parseESIndexConfig(esConfigMap)
         indexer.add(ESClientFunction.createUpsertRequest(index, esType, id, element))
       }
